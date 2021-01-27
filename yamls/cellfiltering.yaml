@@ -1,0 +1,39 @@
+id: CellFiltering-{VER}
+meta:
+  title: Cell Filtering {VER}
+  subtitle: >
+    An approach to remove bad cells (columns) from the assay
+  description: >
+    The details for filtering can be found in [Seurat](https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html).
+endpoints:
+  backend:
+    cmd: python ./run_cellfiltering.py
+    type: docker
+    image: {GBOX}
+frontend:
+  args:
+    - injectInto: min_genes_per_cell
+      type: number
+      label: Min number of unique genes detected per cell
+      description: >-
+        This parameter eliminates cells where the unique number of genes is too low.
+      default: 200
+    - injectInto: max_genes_per_cell
+      type: number
+      label: Max number of unique genes detected per cell 
+      description: >-
+        This parameter eliminates cells where the unique number of genes is too high.
+      default: 2500
+    - injectInto: mt_genes_percent
+      type: number
+      label: Maximum allowed mitochondrial genes expressed (MT*)
+      description: >-
+        This parameter eliminates cells where the percentage of mitochondrial expression is too high.
+      default: 0.05
+  exports:
+    - kind: assay
+      extractFrom: Filtered Cells Assay
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay
