@@ -13,10 +13,6 @@ def main():
     maxgenes = gn.get_arg('max_genes_per_cell')
     mt_percent = gn.get_arg('mt_genes_percent')
 
-    gn.add_result("Min unique genes = {}".format(mingenes), "markdown")
-    gn.add_result("Max unique genes = {}".format(maxgenes), "markdown")
-    gn.add_result("Max mitochondrial percentage = {}".format(mt_percent), "markdown")
-
     uniquegenecount = df.astype(bool).sum(axis=0)
     totalgenecount = df.sum(axis=0)
     mtrows = df[df.index.str.startswith('MT')]
@@ -24,6 +20,12 @@ def main():
     mtpercent = mtgenecount.div(totalgenecount)
     colsmatching = uniquegenecount.T[(uniquegenecount.T >= mingenes) & (uniquegenecount.T <= maxgenes) & (mtpercent.T <= mt_percent)].index.values
     adata = df.loc[:, colsmatching]
+
+    num_gt_min = uniquegenecount.T[(uniquegenecount.T >= mingenes)].index.size
+    num_gt_minmax = uniquegenecount.T[(uniquegenecount.T >= mingenes) & (uniquegenecount.T <= maxgenes)].index.size
+    num_gt_minmaxmt = uniquegenecount.T[(uniquegenecount.T >= mingenes) & (uniquegenecount.T <= maxgenes) & (mtpercent.T <= mt_percent)].index.size
+
+    gn.add_result("Number of cells is now {} with {} below min genes, and of those, {} above max genes, and of those, {} below mt percentage threshold.".format(len(colsmatching), len(colsmatching) - num_gt_min, num_gt_min - num_gt_minmax, num_gt_minmaxmt - num_gt_minmax), "markdown")
 
     gn.export(gn.assay_from_pandas(adata), "Filtered Cells Assay", dynamic=False)
 
