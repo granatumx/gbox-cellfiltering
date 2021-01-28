@@ -28,7 +28,7 @@ def main():
     num_gt_max = uniquegenecount.T[(uniquegenecount.T > maxgenes)].index.size
     num_gt_mt = uniquegenecount.T[(mtpercent.T > mt_percent)].index.size
 
-    gn.add_result("Number of cells is now {} with {} below min genes, {} above max genes, and {} above mt percentage threshold.".format(num_filtered_cells, num_lt_min, num_gt_max, num_gt_mt), "markdown")
+    gn.add_result("Number of cells is now {} out of {} original cells with {} below min genes, {} above max genes, and {} above mt percentage threshold.".format(num_filtered_cells, num_orig_cells, num_lt_min, num_gt_max, num_gt_mt), "markdown")
 
     gn.export(gn.assay_from_pandas(adata), "Filtered Cells Assay", dynamic=False)
 
