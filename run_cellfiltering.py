@@ -35,13 +35,13 @@ def main():
 
     plt.subplot(2, 1, 1)
     plt.title('Unique gene count distribution')
-    sns.distplot(uniquegenecount, kde=True, bins=int(180/5), color = 'darkblue', kde_kws={'linewidth': 4})
+    sns.distplot(uniquegenecount, bins=int(200), color = 'darkblue', kde_kws={'linewidth': 2})
     plt.ylabel('Frequency')
     plt.xlabel('Gene count')
 
     plt.subplot(2, 1, 2)
     plt.title('MT Percent Distribution')
-    sns.distplot(mtpercent, kde=True, bins=int(180/5), color = 'darkblue', kde_kws={'linewidth': 4})
+    sns.distplot(mtpercent, bins=int(200), color = 'darkblue', kde_kws={'linewidth': 2})
     plt.ylabel('Frequency')
     plt.xlabel('MT Percent')
 
