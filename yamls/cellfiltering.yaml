@@ -26,11 +26,11 @@ frontend:
       default: 2500
     - injectInto: mt_genes_percent
       type: number
-      label: Maximum allowed mitochondrial genes expressed (MT*)
+      label: Maximum allowed percentage of mitochondrial genes expressed (MT*)
       description: >-
         This parameter eliminates cells where the percentage of mitochondrial expression is too high.
-      default: 0.05
-      step: 0.01
+      default: 10.0
+      step: 0.1
   exports:
     - kind: assay
       extractFrom: Filtered Cells Assay

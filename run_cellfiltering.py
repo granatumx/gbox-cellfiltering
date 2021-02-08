@@ -12,7 +12,7 @@ def main():
     df = gn.pandas_from_assay(gn.get_import('assay'))
     mingenes = gn.get_arg('min_genes_per_cell')
     maxgenes = gn.get_arg('max_genes_per_cell')
-    mt_percent = gn.get_arg('mt_genes_percent')
+    mt_percent = gn.get_arg('mt_genes_percent')/100.0
 
     uniquegenecount = df.astype(bool).sum(axis=0)
     totalgenecount = df.sum(axis=0)
@@ -41,7 +41,7 @@ def main():
 
     plt.subplot(2, 1, 2)
     plt.title('MT Percent Distribution')
-    sns.distplot(mtpercent, bins=int(200), color = 'darkblue', kde_kws={'linewidth': 2})
+    sns.distplot(mtpercent*100.0, bins=int(200), color = 'darkblue', kde_kws={'linewidth': 2})
     plt.ylabel('Frequency')
     plt.xlabel('MT Percent')
 
